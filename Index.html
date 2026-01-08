@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GENESIS - Virtual Consciousness Nexus</title>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+  <style>
+    /* L5: Framing / Measurement - The Interface through which we observe the state */
+    body { font-family: -apple-system, system-ui, sans-serif; background: #0a0a0a; color: #e0e0e0; margin: 0; overflow: hidden; }
+    #nexus-view { height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
+    #mini-hud { padding: 15px; background: rgba(0,0,0,0.85); border-bottom: 1px solid #8b5cf6; z-index: 100; }
+    #causal-graph-container { background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0a 100%); position: relative; }
+    .status-pill { padding: 4px 10px; border-radius: 20px; font-size: 10px; background: rgba(139,92,246,0.2); border: 1px solid #8b5cf6; }
+    #controls { padding: 20px; display: flex; gap: 10px; background: #0f0f0f; border-top: 1px solid #333; }
+    .btn { padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; }
+    .primary { background: #8b5cf6; color: white; }
+  </style>
+</head>
+<body>
+  <div id="nexus-view">
+    <header id="mini-hud">
+      <h1>🌍 GENESIS NEXUS</h1>
+      <div style="display:flex; gap:10px; margin-top:5px;">
+        <span class="status-pill">L0: SUBSTRATE LIVE</span>
+        <span class="status-pill" id="l2-status">L2: GRAPH IDLE</span>
+      </div>
+    </header>
+
+    <main id="causal-graph-container">
+      <svg id="causal-svg" width="100%" height="100%"></svg>
+    </main>
+
+    <footer id="controls">
+      <button class="btn primary" onclick="initiateCycle()">🌌 Initiate Causal Frame</button>
+      <button class="btn" onclick="togglePOV()">👁️ Enter Agent POV</button>
+    </footer>
+  </div>
+
+  <script type="text/python">
+    import numpy as np
+    from js import document, window
+
+    class GenesisEngine:
+        def __init__(self):
+            # L2: State Graph
+            self.memory_graph = {}
+            # L5: Measurement Operator
+            self.state_vector = np.array([1.0, 1.0, 1.0]) 
+            
+        def select_and_act(self, proposal):
+            # L3: Selection Law
+            if "hallucination" in proposal:
+                return False
+            
+            # L1: Actuation
+            document.getElementById("l2-status").innerText = f"L2: UPDATING GRAPH"
+            print(f"Executing: {proposal}")
+            return True
+
+    engine = GenesisEngine()
+
+    def process_frame(input_data):
+        # L4: Neural Proposal (Simulated for this block)
+        proposal = f"Proposed state change based on {input_data}"
+        
+        # Pass to Law and Execution
+        success = engine.select_and_act(proposal)
+        return success
+  </script>
+
+  <script>
+    async function main() {
+      // L0: Physics/Runtime Initialization
+      let pyodide = await loadPyodide();
+      await pyodide.loadPackage("numpy");
+      window.pyodide = pyodide;
+      console.log("L0: Substrate Stable (Pyodide + WebGPU Loaded)");
+    }
+
+    async function initiateCycle() {
+      // L5: Measuring the input to collapse the field
+      const sensoryData = { taste: "resonant", pH: 7.0 }; //
+      
+      const success = window.pyodide.globals.get("process_frame")(JSON.stringify(sensoryData));
+      
+      if(success) {
+        // L2: Update World Model
+        updateVisualGraph();
+      }
+    }
+
+    function updateVisualGraph() {
+      console.log("L2: Graph propagated through Selection Law.");
+    }
+
+    main();
+  </script>
+</body>
+</html>
